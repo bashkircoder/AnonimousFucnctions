@@ -10,12 +10,12 @@ using namespace std;
 
 vector<int> Array;
 
-enum ArrayFunction{
+enum ArrayFunctionType{
     Zero, Positive, Negative, Maximum, Minimum, Max_Count, Min_count
 };
 
 typedef int (*Action)();
-typedef map<ArrayFunction, Action> Result;
+typedef map<ArrayFunctionType, Action> Result;
 
 string Parser(string* str, char delimiter);
 vector<int> FillArrayFromFile(string input_path);
@@ -27,8 +27,8 @@ int FindMaxNumber ();
 int FindMinNumber ();
 int CountMax ();
 int CountMin ();
-void SubstitutionText (ArrayFunction);
-void PrintMap (map<ArrayFunction, Action> result);
+string SubstitutionText (ArrayFunctionType);
+void PrintMap (map<ArrayFunctionType, Action> result);
 
 
 int main() {
@@ -114,7 +114,7 @@ int FindMaxNumber (){
     return maximum;
 }
 int FindMinNumber (){
-    int minimum = Array[0];
+    minimum = Array[0];
     for (int i = 1; i < Array.size(); ++i) {
         if (Array[i] < minimum) minimum = Array[i];
     }
@@ -137,42 +137,45 @@ int CountMin (){
     return count;
 }
 
-void SubstitutionText (ArrayFunction type){
+string SubstitutionText (ArrayFunctionType type){
+    string text;
     switch (type) {
         case Zero:{
-            cout << "Count of zero is: ";
+            text = "Count of zero is: ";
             break;
         }
         case Positive:{
-            cout << "Count of positive numbers: ";
+            text = "Count of positive numbers: ";
             break;
         }
         case Negative:{
-            cout << "Count of negative numbers: ";
+            text = "Count of negative numbers: ";
             break;
         }
         case Maximum:{
-            cout << "Maximium number: ";
+            text = "Maximium number: ";
             break;
         }
         case Minimum:{
-            cout << "Minimum number: ";
+            text = "Minimum number: ";
             break;
         }
         case Max_Count:{
-            cout << "Count of maximum: ";
+            text = "Count of maximum: ";
             break;
         }
         case Min_count:{
-            cout << "Count of minimum: ";
+            text = "Count of minimum: ";
             break;
         }
     }
+    return text;
 }
 
-void PrintMap (map<ArrayFunction, Action> result){
+void PrintMap (map<ArrayFunctionType, Action> result){
     for (auto item : result){
-        SubstitutionText(item.first);
-        cout << item.second() << endl;
+        string str;
+        str = SubstitutionText(item.first);
+        cout << str << item.second() << endl;
     }
 }
